@@ -1,0 +1,15 @@
+.container {
+  border: 1px solid black;
+  max-width: 350px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.container > * {
+  margin: 5px;
+}
+
+.container label {
+  display: block;
+  padding: 10px;
+}
