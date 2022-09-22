@@ -1,29 +1,9 @@
-# README #
+# Buketti backend
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Getting started
 
-### What is this repository for? ###
+To get the Node server running locally:
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* Clone this repo `git clone git@bitbucket.org:santtun/buketti-backend.git`  
+* `npm install` to install all required dependencies  
+* `npm run dev` to start the local server  
