@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang='en'>
   <head>
-    <title>Our Funky HTML Page</title>
+    <title>File upload page</title>
     <link rel="stylesheet" href='styles.css'>
   </head>
   <body>
@@ -11,14 +11,14 @@
       <div class='container'>
         <form action="http://localhost:3000/docx/upload" method="POST" enctype="multipart/form-data">
           <label for='docx-input'>Upload .docx file</label>
-          <input type='file' id='docx-input' />
+          <input type='file' id='docx-input' name="docx"  />
           <input type="submit" value="Upload"/>
         </form>
       </div>
       <div class='container'>
         <form action="http://localhost:3000/xlsx/upload" method="POST" enctype="multipart/form-data">
           <label for='xlsx-input'>Upload .xslx file</label>
-          <input type='file' id='xlsx-input' />
+          <input type='file' id='xlsx-input' name="xlsx"  />
           <input type="submit" value="Upload"/>
         </form>
       </div>
