@@ -3,6 +3,8 @@ import express, { Application, Request, Response } from 'express';
 import multer from 'multer';
 import fs from 'fs';
 import XLSX from 'xlsx';
+
+/* eslint-disable @typescript-eslint/no-var-requires */
 const officeParser = require('officeparser');
 
 const uploadDirectory = 'uploads/';
