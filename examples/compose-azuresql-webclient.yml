@@ -1,0 +1,32 @@
+version: '2.4'
+services:
+
+  azuresql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=useStrong(!)Password
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./azuresql_data:/var/opt/mssql
+    restart: always
+
+  sqlpad:
+    image: sqlpad/sqlpad:6
+    environment:
+      SQLPAD_ADMIN: 'youremailaddress'
+      SQLPAD_ADMIN_PASSWORD: 'yourpassword'
+      SQLPAD_APP_LOG_LEVEL: info
+      SQLPAD_WEB_LOG_LEVEL: warn
+      SQLPAD_CONNECTIONS__sqlserverdemo__name: Local MS SQL Server
+      SQLPAD_CONNECTIONS__sqlserverdemo__driver: sqlserver
+      SQLPAD_CONNECTIONS__sqlserverdemo__host: mssql
+      SQLPAD_CONNECTIONS__sqlserverdemo__database: master
+      SQLPAD_CONNECTIONS__sqlserverdemo__username: sa
+      SQLPAD_CONNECTIONS__sqlserverdemo__password: useStrong(!)Password
+    ports:
+      - "30000:3000"
+    volumes:
+      - ./sqlpad_data:/var/lib/sqlpad
+    restart: always
