@@ -48,4 +48,6 @@ Thumbs.db
 *.wmv
 
 .env
-uploads
+uploads/
+pgadmin_data/
+postgresql_data/
