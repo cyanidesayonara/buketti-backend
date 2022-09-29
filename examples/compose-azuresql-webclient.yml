@@ -9,7 +9,7 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - ./azuresql_data:/var/opt/mssql
+      - azuresql_data:/var/opt/mssql
     restart: always
 
   sqlpad:
@@ -28,5 +28,11 @@ services:
     ports:
       - "30000:3000"
     volumes:
-      - ./sqlpad_data:/var/lib/sqlpad
+      - sqlpad_data:/var/lib/sqlpad
     restart: always
+
+volumes:
+  azuresql_data:
+    external: true
+  sqlpad_data:
+    external: true
