@@ -1,0 +1,38 @@
+version: '2.4'
+services:
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=useStrong(!)Password
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    restart: always
+
+  sqlpad:
+    image: sqlpad/sqlpad:6
+    environment:
+      SQLPAD_ADMIN: 'youremailaddress'
+      SQLPAD_ADMIN_PASSWORD: 'yourpassword'
+      SQLPAD_APP_LOG_LEVEL: info
+      SQLPAD_WEB_LOG_LEVEL: warn
+      SQLPAD_CONNECTIONS__sqlserverdemo__name: Local MS SQL Server
+      SQLPAD_CONNECTIONS__sqlserverdemo__driver: sqlserver
+      SQLPAD_CONNECTIONS__sqlserverdemo__host: mssql
+      SQLPAD_CONNECTIONS__sqlserverdemo__database: master
+      SQLPAD_CONNECTIONS__sqlserverdemo__username: sa
+      SQLPAD_CONNECTIONS__sqlserverdemo__password: useStrong(!)Password
+    ports:
+      - "30000:3000"
+    volumes:
+      - sqlpad_data:/var/lib/sqlpad
+    restart: always
+
+volumes:
+  mssql_data:
+    external: true
+  sqlpad_data:
+    external: true
