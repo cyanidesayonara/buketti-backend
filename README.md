@@ -46,8 +46,8 @@ docker-compose -d up
 
 ## Environment variables
 
-To use environment variables, simply create a file named `.env` in the root 
-directory, then add the following content:
+To use environment variables, simply rename the `.env.example` file to `.env`,
+then change the following content:
 
 To use a port other than 8000 for the backend service
 
