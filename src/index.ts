@@ -54,7 +54,7 @@ app.post('/xlsx/upload', upload.single('xlsx'), (req: Request, res: Response) =>
   return res.send('Upload failed');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
   console.log(`Server is listening to port ${PORT}`);
