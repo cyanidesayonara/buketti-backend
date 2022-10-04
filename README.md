@@ -31,14 +31,14 @@ Allow access for all users to the pgadmin_data directory:
 chmod go+w pgadmin_data
 ```
 
-To start the backend service with PostgreSQL and PGAdmin
+Start the backend service with PostgreSQL and PGAdmin:
 
 ```
 docker-compose up
 ```
 
 If no errors appear, you can make the script run in the background by adding 
-the -d flag for detached mode
+the -d flag for detached mode:
 
 ```
 docker-compose -d up
@@ -49,14 +49,65 @@ docker-compose -d up
 To use environment variables, simply rename the `.env.example` file to `.env`,
 then change the following content:
 
-To use a port other than 8000 for the backend service
+Use a port other than 8000 for the backend service:
 
 ```
 PORT=<your-port-number-here>
 ```
 
-To use your own email for PGAdmin login
+Use your own email for PGAdmin login:
 
 ```
 PGADMIN_DEFAULT_EMAIL=<your-email-here>
 ```
+
+Use your own password for PGAdmin login:
+
+```
+PGADMIN_DEFAULT_PASSWORD=yourpassword
+```
+
+## Database migrations
+
+The database is used through an ORM (Object-Relational Mapping) library called 
+Prisma. This will make it easier to create database queries, run migrations, 
+and switch between different database types.
+
+Create initial database tables and run further migrations:
+
+```
+npx prisma migrate dev
+```
+
+Populate database with dummy data:
+
+```
+npx prisma db seed
+```
+
+Reset your database, reapply all migrations, and repopulate it:
+
+```
+npx prisma migrate reset
+```
+
+## PGAdmin
+
+PGAdmin is a GUI tool for PostgreSQL databases.
+
+Access it by going to:
+
+```
+http://localhost:8888
+```
+
+Then click "Add New Server" and fill in the following:
+
+```
+Name=postgres
+Hostname=postgres
+Username=testuser
+Password=testpasswd
+```
+
+Or use your own values from the `.env` file, if applicable
