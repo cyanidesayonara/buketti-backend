@@ -30,7 +30,7 @@ const app: Application = express();
 
 app.use(express.static(__dirname + '/'));
 
-app.get('/', (_req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
   res.sendFile(__dirname + '/index.html');
 });
 
