@@ -91,6 +91,13 @@ Reset your database, reapply all migrations, and repopulate it:
 npx prisma migrate reset
 ```
 
+If you have updated the schema.prisma file, create a new 
+migration with:
+
+```
+npx prisma migrate dev
+```
+
 ## PGAdmin
 
 PGAdmin is a GUI tool for PostgreSQL databases.
@@ -111,3 +118,11 @@ Password=testpasswd
 ```
 
 Or use your own values from the `.env` file, if applicable
+
+## REST API
+
+The REST API documentation can be found on Swagger UI in:
+
+```
+http://localhost:8000/api-docs 
+```

@@ -2,7 +2,7 @@ version: '2.4'
 services:
   web:
     build: .
-    command: sh -c "npm run migrate && npm run docker"
+    command: sh -c "npm run migrate deploy && npm run docker"
     environment:
       - DATABASE_URL=postgresql://${DB_USER:-testuser}:${DB_PASSWORD:-testpasswd}@postgres:${DB_PORT:-5432}/${DB_NAME:-postgres}?schema=${DB_SCHEMA:-public}
     ports:

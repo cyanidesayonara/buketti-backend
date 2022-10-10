@@ -1,0 +1,331 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Buketti backend",
+    "description": "Buketti backend REST API"
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "REST API for users"
+    },
+    {
+      "name": "EditorContents",
+      "description": "REST API for editor contents"
+    }
+  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/api/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UsersResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create new user",
+        "description": "Create new user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/NewOrUpdatedUser"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Id of the user that we want to find",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get one user with given id",
+        "description": "Get one user with given id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update user with given id",
+        "description": "Update user with given id",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Updated user with new values",
+            "schema": {
+              "$ref": "#/definitions/NewOrUpdatedUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User is updated",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user with given id",
+        "description": "Delete user with given id",
+        "responses": {
+          "200": {
+            "description": "User is deleted",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/editorContents": {
+      "get": {
+        "tags": ["EditorContents"],
+        "summary": "Get all editor contents",
+        "description": "Get all editor contents",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EditorContentsResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["EditorContents"],
+        "summary": "Create new editor content",
+        "description": "Create new editor content",
+        "parameters": [
+          {
+            "name": "editor content",
+            "in": "body",
+            "description": "Editor content that we want to create",
+            "schema": {
+              "$ref": "#/definitions/NewOrUpdatedEditorContent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New editor content is created",
+            "schema": {
+              "$ref": "#/definitions/EditorContentResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/editorContents/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Id of the editor content that we want to find",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": ["EditorContents"],
+        "summary": "Get one editor content with given id",
+        "description": "Get one editor content with given id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EditorContentResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update editor content with given id",
+        "description": "Update editor content with given id",
+        "tags": ["EditorContents"],
+        "parameters": [
+          {
+            "name": "editor content",
+            "in": "body",
+            "description": "Updated editor content with new content",
+            "schema": {
+              "$ref": "#/definitions/NewOrUpdatedEditorContent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Editor content is updated",
+            "schema": {
+              "$ref": "#/definitions/EditorContentResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete editor content with given id",
+        "description": "Delete editor content with given id",
+        "tags": ["EditorContents"],
+        "responses": {
+          "200": {
+            "description": "Editor content is deleted",
+            "schema": {
+              "$ref": "#/definitions/EditorContentResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "uniqueItems": true
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "editorContents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EditorContent"
+          }
+        }
+      }
+    },
+    "UserResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "$ref": "#/definitions/User"
+        }
+      }
+    },
+    "NewOrUpdatedUser": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "UsersResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        }
+      }
+    },
+    "EditorContent": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "uniqueItems": true
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "content": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "integer"
+        }
+      }
+    },
+    "EditorContentResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "$ref": "#/definitions/EditorContent"
+        }
+      }
+    },
+    "NewOrUpdatedEditorContent": {
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "EditorContentsResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EditorContent"
+          }
+        }
+      }
+    }
+  }
+}
