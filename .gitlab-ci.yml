@@ -18,7 +18,7 @@ build test:
   script:
     - npm run lint
     - npm run test
-    - npm run dev
+    - npm run dev &
     - curl -LIs http://localhost:8000 |grep -q "200 OK"
 
 build image:
