@@ -19,7 +19,7 @@ build test:
     - npm run lint
     #- npm run test
     - npm run dev &
-    - timeout 60 sh -c -- 'until curl -LIs http://localhost:8000 |grep -q "200 OK" && echo "Service responded 200 OK" ; do sleep 1 ; done'
+    - timeout 60 sh -c -- 'until curl -LIs http://localhost:8000 |grep -q "200 OK" && echo "Server responded 200 OK" ; do sleep 1 ; done'
 
 build image:
   stage: build image
