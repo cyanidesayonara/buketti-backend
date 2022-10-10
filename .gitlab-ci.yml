@@ -28,6 +28,7 @@ build test:
 
 build image:
   stage: build image
+  before_script:
+    - docker -v
   script:
-    - docker --version
     - docker build -t buketti-backend .
