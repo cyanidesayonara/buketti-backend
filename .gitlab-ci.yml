@@ -30,4 +30,4 @@ build image:
   stage: build image
   script:
     - docker --version
-    - docker ps
+    - docker build -t buketti-backend .
