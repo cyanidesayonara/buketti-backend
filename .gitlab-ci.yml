@@ -1,0 +1,8 @@
+stages:
+  - build
+
+build test:
+  stage: build
+  script:
+    - docker --version
+    - docker ps
