@@ -1,4 +1,5 @@
 stages:
+  - cache
   - build
   - test
   - build image
@@ -7,9 +8,26 @@ variables:
   PROJECT_NAME: buketti-backend
   CONTAINER_REGISTRY: registry.gitlab.valtori.fi/vm-private/buketti-backend
 
+cache: &global_cache
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+  policy: pull
+
+update cache:
+  cache:
+    <<: *global_cache
+    policy: push
+  only:
+    - schedules
+  script:
+    - npm install
+
 build:
   stage: build
   image: node:16-alpine
+  except:
+    - schedules
   before_script:
     - node -v
     - npm -v
@@ -19,6 +37,8 @@ build:
 test build:
   stage: test
   image: node:16-alpine
+  except:
+    - schedules
   before_script:
     - node -v
     - npm -v
@@ -32,6 +52,9 @@ test build:
 
 build and push image:
   stage: build image
+  cache: {}
+  except:
+    - schedules
   before_script:
     - docker -v
   script:
