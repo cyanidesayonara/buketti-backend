@@ -30,7 +30,7 @@ test build:
     - npm run dev &
     - timeout 60 sh -c -- 'until curl -LIs http://localhost:8000 |grep -q "200 OK" && echo "Server responded 200 OK" ; do sleep 1 ; done'
 
-build image:
+build and push image:
   stage: build image
   before_script:
     - docker -v
