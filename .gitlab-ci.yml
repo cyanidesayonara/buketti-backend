@@ -31,4 +31,4 @@ build image:
   before_script:
     - docker -v
   script:
-    - docker build -t buketti-backend .
+    - docker build -t buketti-backend:${CI_COMMIT_REF_SLUG} .
