@@ -36,5 +36,6 @@ build image:
     - docker -v
   script:
     - docker build -t ${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA} .
+    - docker login -u ${CONTAINER_REGISTRY_USERNAME} -p ${CONTAINER_REGISTRY_PASSWORD} ${CONTAINER_REGISTRY}
     - docker image tag ${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA} ${CONTAINER_REGISTRY}/${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}
     - docker image push ${CONTAINER_REGISTRY}/${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}
