@@ -66,6 +66,7 @@ build and push image:
     - docker image push ${CONTAINER_REGISTRY}/${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}
 
 deploy staging:
+  stage: deploy staging
   cache: {}
   except:
     - schedules
