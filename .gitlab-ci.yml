@@ -65,6 +65,8 @@ build and push image:
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}/${CI_PROJECT_PATH}
     - docker image tag ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
     - docker image push ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
+  after_script:
+    - docker logout ${CI_REGISTRY}/${CI_PROJECT_PATH}
 
 deploy staging:
   stage: deploy staging
@@ -76,3 +78,5 @@ deploy staging:
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}/${CI_PROJECT_PATH}
   script:
     - docker run --name ${CI_PROJECT_TITLE} -p 8000:8000 -d ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
+  after_script:
+    - docker logout ${CI_REGISTRY}/${CI_PROJECT_PATH}
