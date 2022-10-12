@@ -3,6 +3,7 @@ stages:
   - build
   - test
   - build image
+  - deploy staging
 
 variables:
   PROJECT_NAME: buketti-backend
@@ -63,3 +64,13 @@ build and push image:
     - docker login -u ${CONTAINER_REGISTRY_USERNAME} -p ${CONTAINER_REGISTRY_PASSWORD} ${CONTAINER_REGISTRY}
     - docker image tag ${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA} ${CONTAINER_REGISTRY}/${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}
     - docker image push ${CONTAINER_REGISTRY}/${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}
+
+deploy staging:
+  cache: {}
+  except:
+    - schedules
+  before_script:
+    - docker -v
+    - docker login -u ${CONTAINER_REGISTRY_USERNAME} -p ${CONTAINER_REGISTRY_PASSWORD} ${CONTAINER_REGISTRY}
+  script:
+    - docker run --name ${PROJECT_NAME} -p 8000:8000 -d ${CONTAINER_REGISTRY}/${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}
