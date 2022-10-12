@@ -88,6 +88,8 @@ deploy staging:
   except:
     - schedules
   before_script:
+    - apk add --no-cache openssh-client
+    - eval "$(ssh-agent)"
     - ssh-add <(echo "${STAGING_PRIVATE_KEY}")
   script:
     - ssh -o StrictHostKeyChecking=no ${STAGING_USER}@${STAGING_SERVER} 'ls /opt'
