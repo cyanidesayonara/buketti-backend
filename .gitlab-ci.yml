@@ -61,10 +61,10 @@ build and push image:
   before_script:
     - docker -v
   script:
-    - docker build -t ${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA} .
-    - docker login -u ${CONTAINER_REGISTRY_USERNAME} -p ${CONTAINER_REGISTRY_PASSWORD} ${CONTAINER_REGISTRY}
-    - docker image tag ${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA} ${CONTAINER_REGISTRY}/${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}
-    - docker image push ${CONTAINER_REGISTRY}/${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}
+    - docker build -t ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} .
+    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+    - docker image tag ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} ${CI_REGISTRY}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
+    - docker image push ${CI_REGISTRY}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
 
 deploy staging:
   stage: deploy staging
@@ -73,6 +73,6 @@ deploy staging:
     - schedules
   before_script:
     - docker -v
-    - docker login -u ${CONTAINER_REGISTRY_USERNAME} -p ${CONTAINER_REGISTRY_PASSWORD} ${CONTAINER_REGISTRY}
+    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
   script:
-    - docker run --name ${PROJECT_NAME} -p 8000:8000 -d ${CONTAINER_REGISTRY}/${PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}
+    - docker run --name ${CI_PROJECT_TITLE} -p 8000:8000 -d ${CI_REGISTRY}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
