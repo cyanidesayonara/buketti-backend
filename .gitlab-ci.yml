@@ -68,15 +68,26 @@ build and push image:
   after_script:
     - docker logout ${CI_REGISTRY}
 
+# deploy staging:
+#   stage: deploy staging
+#   cache: {}
+#   except:
+#     - schedules
+#   before_script:
+#     - docker -v
+#     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+#   script:
+#     - docker run --name ${CI_PROJECT_TITLE} -p 8000:8000 -d ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
+#   after_script:
+#     - docker logout ${CI_REGISTRY}
+
 deploy staging:
   stage: deploy staging
+  image: alpine:3.16
   cache: {}
   except:
     - schedules
   before_script:
-    - docker -v
-    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+    - ssh-add <(echo "${STAGING_PRIVATE_KEY}")
   script:
-    - docker run --name ${CI_PROJECT_TITLE} -p 8000:8000 -d ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
-  after_script:
-    - docker logout ${CI_REGISTRY}
+    - ssh -o StrictHostKeyChecking=no ${STAGING_USER}@${STAGING_SERVER} 'ls /opt'
