@@ -56,11 +56,15 @@ build and push image:
     - schedules
   before_script:
     - docker -v
+    - JIRA_TICKET_ID=$(echo $CI_COMMIT_BRANCH | grep -o "BUK-[0-9]*")
+    - echo ${JIRA_TICKET_ID}
   script:
     - docker build -t ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} .
     - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
     - docker image tag ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
+    - docker image tag ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${JIRA_TICKET_ID}
     - docker image push ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
+    - docker image push ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${JIRA_TICKET_ID}
   after_script:
     - docker logout ${CI_REGISTRY}
 
@@ -84,6 +88,8 @@ deploy staging:
   except:
     - schedules
   before_script:
+    - JIRA_TICKET_ID=$(echo $CI_COMMIT_BRANCH | grep -o "BUK-[0-9]*")
+    - echo ${JIRA_TICKET_ID}
     - apk add --no-cache openssh-client
     - eval "$(ssh-agent)"
     - ssh-add <(echo "${STAGING_PRIVATE_KEY}")
@@ -91,4 +97,4 @@ deploy staging:
     - echo ${CI_MERGE_REQUEST_TITLE}
     - echo ${CI_COMMIT_BRANCH}
   script:
-    - ssh -o StrictHostKeyChecking=no ${STAGING_USER}@${STAGING_SERVER} "docker compose -f /opt/${CI_PROJECT_TITLE}/docker-compose.yml up --pull always -d"
+    - ssh -o StrictHostKeyChecking=no ${STAGING_USER}@${STAGING_SERVER} "docker compose -f /opt/${CI_PROJECT_TITLE}/docker-compose-${JIRA_TICKET_ID}.yml up --pull always -d"
