@@ -56,7 +56,7 @@ build and push image:
     - schedules
   before_script:
     - docker -v
-    - JIRA_TICKET_ID=$(echo $CI_COMMIT_BRANCH | grep -o "BUK-[0-9]*")
+    - JIRA_TICKET_ID=$(echo $CI_COMMIT_BRANCH | grep -o -E "BUK-[0-9]+" | head -n 1)
     - echo ${JIRA_TICKET_ID}
   script:
     - docker build -t ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} .
@@ -88,7 +88,7 @@ deploy staging:
   except:
     - schedules
   before_script:
-    - JIRA_TICKET_ID=$(echo $CI_COMMIT_BRANCH | grep -o "BUK-[0-9]*")
+    - JIRA_TICKET_ID=$(echo $CI_COMMIT_BRANCH | grep -o -E "BUK-[0-9]+" | head -n 1)
     - echo ${JIRA_TICKET_ID}
     - apk add --no-cache openssh-client
     - eval "$(ssh-agent)"
