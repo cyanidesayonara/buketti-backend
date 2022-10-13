@@ -5,10 +5,6 @@ stages:
   - build image
   - deploy staging
 
-variables:
-  PROJECT_NAME: buketti-backend
-  CONTAINER_REGISTRY: registry.gitlab.valtori.fi/vm-private/buketti-backend
-
 cache: &global_cache
   key: ${CI_COMMIT_REF_SLUG}
   paths:
