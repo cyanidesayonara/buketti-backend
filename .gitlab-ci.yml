@@ -92,4 +92,4 @@ deploy staging:
     - eval "$(ssh-agent)"
     - ssh-add <(echo "${STAGING_PRIVATE_KEY}")
   script:
-    - ssh -o StrictHostKeyChecking=no ${STAGING_USER}@${STAGING_SERVER} 'ls /opt'
+    - ssh -o StrictHostKeyChecking=no ${STAGING_USER}@${STAGING_SERVER} 'docker compose -f /opt/${CI_PROJECT_TITLE}/docker-compose.yml up -d'
