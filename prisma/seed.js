@@ -6,17 +6,14 @@ const load = async () => {
   try {
     const users = [
       {
-        id: 1,
         name: 'Antonio',
         email: 'antonio@email.com',
       },
       {
-        id: 2,
         name: 'Bianca',
         email: 'bianca@email.com',
       },
       {
-        id: 3,
         name: 'Cecilia',
         email: 'cecilia@email.com',
       },
