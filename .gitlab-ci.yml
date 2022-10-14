@@ -51,6 +51,7 @@ test build:
 
 build and push image:
   stage: build image
+  image: buildah:1.28.0-r0-alpine3.16
   cache: {}
   except:
     - schedules
