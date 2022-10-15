@@ -49,8 +49,7 @@ test build:
     - npm run dev &
     - timeout 60 sh -c -- 'until curl -LIs http://localhost:8000 |grep -q "200 OK" && echo "Server responded 200 OK" ; do sleep 1 ; done'
 
-.define tag: &define_tag
-  - |
+.define tag: &define_tag |
     echo "Defining the tag for the image (which will be the version name to deploy)..."
     # Parse JIRA ticket ID from the commit branch name in branch pipelines (including the default branch)
     if [[ ${CI_COMMIT_BRANCH-} ]]; then; TAG=$(echo $CI_COMMIT_BRANCH | grep -o -E "BUK-[0-9]+" | head -n 1); fi
@@ -68,7 +67,7 @@ build and push image:
     - schedules
   before_script:
     - docker -v
-    - <<:*define_tag
+    - *define_tag
   script:
     - docker build -t ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} .
     - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
@@ -99,7 +98,7 @@ deploy staging:
   except:
     - schedules
   before_script:
-    - <<:*define_tag
+    - *define_tag
     - apk add --no-cache openssh-client
     - eval "$(ssh-agent)"
     - echo ${STAGING_PRIVATE_KEY_BASE64} | base64 -d | ssh-add - > /dev/null
