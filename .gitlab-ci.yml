@@ -103,7 +103,5 @@ deploy staging:
     - eval "$(ssh-agent)"
     - echo ${STAGING_PRIVATE_KEY_BASE64} | base64 -d | ssh-add - > /dev/null
     - ssh -o StrictHostKeyChecking=no ${STAGING_USER}@${STAGING_SERVER} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
-    - echo ${CI_MERGE_REQUEST_TITLE}
-    - echo ${CI_COMMIT_BRANCH}
   script:
     - ssh -o StrictHostKeyChecking=no ${STAGING_USER}@${STAGING_SERVER} "docker compose -f /opt/${CI_PROJECT_TITLE}/docker-compose-${TAG}.yml up --pull always -d"
