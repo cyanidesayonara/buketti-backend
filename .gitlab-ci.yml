@@ -50,7 +50,7 @@ test build:
     - timeout 60 sh -c -- 'until curl -LIs http://localhost:8000 |grep -q "200 OK" && echo "Server responded 200 OK" ; do sleep 1 ; done'
 
 .define tag: &define_tag |
-    echo "Defining the tag for the image (which will be the version name to deploy)..."
+    # Defining the tag for the image (which will be the version name to deploy)...
     # Parse JIRA ticket ID from the commit branch name in branch pipelines (including the default branch)
     if [[ ${CI_COMMIT_BRANCH-} ]]; then TAG=$(echo $CI_COMMIT_BRANCH | grep -o -E "BUK-[0-9]+" | head -n 1); fi
     # Parse JIRA ticket ID from the merge request title in merge request pipelines
