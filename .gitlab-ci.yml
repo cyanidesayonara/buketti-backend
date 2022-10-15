@@ -86,7 +86,8 @@ deploy staging:
     - schedules
   before_script:
     - *define_tag
-    - apk add --no-cache openssh-client
+    - # Install OpenSSH client if it isn't installed yet
+      command -v ssh >/dev/null 2>&1 && apk add --no-cache openssh-client
     - eval "$(ssh-agent)"
     - echo ${STAGING_PRIVATE_KEY_BASE64} | base64 -d | ssh-add - > /dev/null
     - ssh -o StrictHostKeyChecking=no ${STAGING_USER}@${STAGING_SERVER} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
