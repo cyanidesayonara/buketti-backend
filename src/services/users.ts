@@ -1,49 +1,39 @@
 import { prisma } from '../../prisma';
 
 const getAll = () => {
-  return prisma.user.findMany();
+  return prisma.user.findMany({
+    include: { editorContents: true }
+  });
 };
 
 const getOne = (id: number) => {
   return prisma.user.findUnique({
-    where: {
-      id: id
-    }
+    where: { id },
+    include: { editorContents: true }
   });
 };
 
 const upsertOne = (name: string, email: string) => {
   return prisma.user.upsert({
-    where: {
-      email: email
-    },
-    update: {
-      name: name
-    },
-    create: {
-      name: name,
-      email: email,
-    }
+    where: { email },
+    update: { name },
+    create: { name, email },
+    include: { editorContents: true }
   });
 };
 
 const updateOne = (id: number, name: string, email: string) => {
   return prisma.user.update({
-    where: {
-      id: id,
-    },
-    data: {
-      name: name,
-      email: email,
-    }
+    where: { id },
+    data: { name, email },
+    include: { editorContents: true }
   });
 };
 
-const deleteOne = (id:number) => {
+const deleteOne = (id: number) => {
   return prisma.user.delete({
-    where: {
-      id: id,
-    },
+    where: { id },
+    include: { editorContents: true }
   });
 };
 
