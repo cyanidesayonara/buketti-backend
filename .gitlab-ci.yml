@@ -65,6 +65,9 @@ build and push image:
   cache: {}
   except:
     - schedules
+  only:
+    - main
+    - merge_requests
   before_script:
     - docker -v
     - *define_tag
@@ -84,6 +87,9 @@ deploy staging:
   cache: {}
   except:
     - schedules
+  only:
+    - main
+    - merge_requests
   before_script:
     - *define_tag
     - # Install OpenSSH client if no SSH client can be found
