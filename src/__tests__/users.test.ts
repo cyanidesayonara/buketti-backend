@@ -50,7 +50,8 @@ describe('users API', () => {
       email: 'danny@new-email.com'
     };
 
-    await expect(updateOne(originalUser.id, updatedUser.name, updatedUser.email)).resolves.toEqual(updatedUser);
+    await expect(updateOne(originalUser.id, updatedUser.name, updatedUser.email))
+      .resolves.toHaveProperty('email', 'danny@new-email.com');
   });
 
   it('deletes existing user', async () => {
@@ -60,7 +61,7 @@ describe('users API', () => {
       email: 'danny@new-email.com'
     };
 
-    await expect(deleteOne(user.id)).resolves.toEqual(user);
+    await expect(deleteOne(user.id)).resolves.toHaveProperty('id', 4);
     await expect(getAll()).resolves.toHaveLength(3);
   });
 });

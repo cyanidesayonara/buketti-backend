@@ -13,6 +13,10 @@
     {
       "name": "EditorContents",
       "description": "REST API for editor contents"
+    },
+    {
+      "name": "EditHistories",
+      "description": "REST API for edit histories"
     }
   ],
   "consumes": ["application/json"],
@@ -215,6 +219,58 @@
           }
         }
       }
+    },
+    "/api/editHistories": {
+      "get": {
+        "tags": ["EditHistories"],
+        "summary": "Get all edit histories",
+        "description": "Get all edit histories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EditHistoriesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/editHistories/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Id of the edit history that we want to find",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": ["EditHistories"],
+        "summary": "Get one edit history with given id",
+        "description": "Get one edit history with given id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EditHistoryResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete edit history with given id",
+        "description": "Delete edit history with given id",
+        "tags": ["EditHistories"],
+        "responses": {
+          "200": {
+            "description": "Edit history is deleted",
+            "schema": {
+              "$ref": "#/definitions/EditHistoryResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -323,6 +379,48 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/EditorContent"
+          }
+        }
+      }
+    },
+    "EditHistory": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "uniqueItems": true
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "contentId": {
+          "type": "integer"
+        },
+        "userId": {
+          "type": "integer"
+        }
+      }
+    },
+    "EditHistoryResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "$ref": "#/definitions/EditHistory"
+        }
+      }
+    },
+    "EditHistoriesResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EditHistory"
           }
         }
       }

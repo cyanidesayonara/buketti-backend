@@ -14,16 +14,24 @@ const createOne = async (content: string) => {
   const user = await prisma.user.findUnique({
     where: { id: 1 }
   });
-  return prisma.editorContent.create({
+  const editorContent = await prisma.editorContent.create({
     data: { content, userId: user?.id ?? null }
   });
+  await prisma.editHistory.create({
+    data: { contentId: editorContent.id, userId: user?.id ?? null }
+  });
+  return editorContent;
 };
 
-const updateOne = (id: number, content: string) => {
-  return prisma.editorContent.update({
+const updateOne = async (id: number, content: string) => {
+  const editorContent = await prisma.editorContent.update({
     where: { id },
     data: { content }
   });
+  await prisma.editHistory.create({
+    data: { contentId: editorContent.id, userId: editorContent.userId }
+  });
+  return editorContent;
 };
 
 const deleteOne = (id:number) => {
