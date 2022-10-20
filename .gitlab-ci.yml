@@ -85,9 +85,9 @@ build and push image:
     - docker build -t ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} .
     - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
     - docker image tag ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
-    - docker image tag ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${TAG}
+    - if [[ "${TAG-}" ]]; then docker image tag ${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA} ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${TAG} ; fi
     - docker image push ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${CI_COMMIT_SHORT_SHA}
-    - docker image push ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${TAG}
+    - if [[ "${TAG-}" ]]; then docker image push ${CI_REGISTRY}/${CI_PROJECT_PATH}/${CI_PROJECT_TITLE}:${TAG} ; fi
   after_script:
     - docker logout ${CI_REGISTRY}
 
