@@ -63,8 +63,6 @@ test build:
     if [[ `echo ${CI_COMMIT_BRANCH} | grep -o -E "BUK-[0-9]+"` ]]; then echo "CI_COMMIT_BRANCH: ${CI_COMMIT_BRANCH}"; TAG=$(echo $CI_COMMIT_BRANCH | grep -o -E "BUK-[0-9]+" | head -n 1); fi
     # Parse JIRA ticket ID from the merge request title in merge request pipelines
     if [[ `echo "${CI_MERGE_REQUEST_TITLE}" | grep -o -E "BUK-[0-9]+"` ]]; then echo "CI_MERGE_REQUEST_TITLE: ${CI_MERGE_REQUEST_TITLE}"; TAG=$(echo $CI_MERGE_REQUEST_TITLE | grep -o -E "BUK-[0-9]+" | head -n 1); fi
-    echo $?
-    echo "Tag X: ${TAG}"
     # Use the tag in tag pipelines
     if [[ "${CI_COMMIT_TAG-}" ]]; then echo "CI_COMMIT_TAG: ${CI_COMMIT_TAG}"; TAG=${CI_COMMIT_TAG}; fi
     # Use main (default branch) as tag:
