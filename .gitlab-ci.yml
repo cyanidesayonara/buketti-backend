@@ -60,9 +60,9 @@ test build:
 .define tag: &define_tag |
     # Defining the tag for the image (which will be the version name to deploy)...
     # Parse JIRA ticket ID from the commit branch name in branch pipelines (including the default branch)
-    if [[ "${CI_COMMIT_BRANCH-}" ]]; then echo "CI_COMMIT_BRANCH: ${CI_COMMIT_BRANCH}"; TAG=$(echo $CI_COMMIT_BRANCH | grep -o -E "BUK-[0-9]+" | head -n 1); fi
+    if [[ echo ${CI_COMMIT_BRANCH} | grep -o -E "BUK-[0-9]+" ]]; then echo "CI_COMMIT_BRANCH: ${CI_COMMIT_BRANCH}"; TAG=$(echo $CI_COMMIT_BRANCH | grep -o -E "BUK-[0-9]+" | head -n 1); fi
     # Parse JIRA ticket ID from the merge request title in merge request pipelines
-    if [[ "${CI_MERGE_REQUEST_TITLE-}" ]]; then echo "CI_MERGE_REQUEST_TITLE: ${CI_MERGE_REQUEST_TITLE}"; TAG=$(echo $CI_MERGE_REQUEST_TITLE | grep -o -E "BUK-[0-9]+" | head -n 1); fi
+    if [[ echo "${CI_MERGE_REQUEST_TITLE}" | grep -o -E "BUK-[0-9]+" ]]; then echo "CI_MERGE_REQUEST_TITLE: ${CI_MERGE_REQUEST_TITLE}"; TAG=$(echo $CI_MERGE_REQUEST_TITLE | grep -o -E "BUK-[0-9]+" | head -n 1); fi
     echo $?
     echo "Tag X: ${TAG}"
     # Use the tag in tag pipelines
