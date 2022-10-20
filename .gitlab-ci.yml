@@ -102,6 +102,7 @@ deploy staging:
     - merge_requests
   before_script:
     - *define_tag
+    - if [[ ! "${TAG-}" ]]; then echo "No version tag defined. Skipping deploy..."; exit; fi
     - # Install OpenSSH client if no SSH client can be found
       if [[ ! $(command -v ssh) ]]; then apk add --no-cache openssh-client; fi
     - eval "$(ssh-agent)"
