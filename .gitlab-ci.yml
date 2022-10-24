@@ -46,6 +46,8 @@ test build:
     - main
     - merge_requests
     - branches
+  variables:
+    DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?schema=${DB_SCHEMA}
   before_script:
     - node -v
     - npm -v
