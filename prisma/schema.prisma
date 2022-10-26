@@ -13,12 +13,23 @@ model User {
   email          String          @unique
   name           String
   editorContents EditorContent[]
+  EditHistory    EditHistory[]
 }
 
 model EditorContent {
-  createdAt DateTime @default(now())
-  id        Int      @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  id          Int           @id @default(autoincrement())
+  userId      Int?
+  content     String
+  user        User?         @relation(fields: [userId], references: [id])
+  EditHistory EditHistory[]
+}
+
+model EditHistory {
+  createdAt DateTime      @default(now())
+  id        Int           @id @default(autoincrement())
+  contentId Int
   userId    Int?
-  content   String
-  user      User?    @relation(fields: [userId], references: [id])
+  content   EditorContent @relation(fields: [contentId], references: [id])
+  user      User?         @relation(fields: [userId], references: [id])
 }
