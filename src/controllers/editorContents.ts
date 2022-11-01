@@ -15,9 +15,16 @@ editorContentsRouter.get('/:id', async (req: Request, res: Response) => {
 });
 
 editorContentsRouter.post('/', async (req: Request, res: Response) => {
-  const { content } = req.body;
-  const editorContent = await createOne(content);
-  return res.json({ message: '', data: editorContent });
+  try { // try to receive json
+    const { content } = req.body;
+    const editorContent = await createOne(content);
+    return res.json({ message: '', data: editorContent });
+  } catch (e) { // try to receive plaintext
+    const content = req.body;
+    const trimmedContent = content.replace(/[\r\n]+/g, '');
+    const editorContent = await createOne(trimmedContent);
+    return res.json({ message: '', data: editorContent });
+  }
 });
 
 editorContentsRouter.put('/:id', async (req: Request, res: Response) => {

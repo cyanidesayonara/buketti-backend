@@ -137,6 +137,7 @@
         }
       },
       "post": {
+        "consumes": ["application/json", "text/plain"],
         "tags": ["EditorContents"],
         "summary": "Create new editor content",
         "description": "Create new editor content",
@@ -184,6 +185,7 @@
         }
       },
       "put": {
+        "consumes": ["application/json", "text/plain"],
         "summary": "Update editor content with given id",
         "description": "Update editor content with given id",
         "tags": ["EditorContents"],
