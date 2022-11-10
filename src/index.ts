@@ -18,8 +18,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.use(express.static(__dirname + '/'));
+app.use(bodyParser.text());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
