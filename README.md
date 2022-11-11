@@ -18,6 +18,10 @@ Other useful commands:
 
 ## Docker-compose
 
+Make sure you have Docker installed.
+
+Create .env file.
+
 Create the directories that are mounted outside containers:
 
 ```
