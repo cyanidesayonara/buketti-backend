@@ -8,6 +8,7 @@ import usersRouter from './controllers/users';
 import editorContentsRouter from './controllers/editorContents';
 import editHistoriesRouter from './controllers/editHistories';
 import moment from './controllers/moment';
+import laskelmaRouter from './controllers/laskelmas';
 
 const app: Application = express();
 
@@ -28,6 +29,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/editorContents', editorContentsRouter);
 app.use('/api/editHistories', editHistoriesRouter);
 app.use('/api/moment', moment);
+app.use('/api/laskelmas', laskelmaRouter);
 
 app.get('/', (req: Request, res: Response) => {
   res.sendFile(__dirname + '/index.html');

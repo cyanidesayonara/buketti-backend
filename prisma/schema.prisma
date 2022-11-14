@@ -33,3 +33,17 @@ model EditHistory {
   content   EditorContent @relation(fields: [contentId], references: [id])
   user      User?         @relation(fields: [userId], references: [id])
 }
+
+model Laskelma {
+  id             Int          @id @default(autoincrement())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  tyyppi         String
+  muutosId       Int
+  kanta          String
+  vuosi          String
+  kehysjako      String
+  arvo           Int
+}
+
+
