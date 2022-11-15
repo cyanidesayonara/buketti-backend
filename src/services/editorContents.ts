@@ -10,15 +10,12 @@ const getOne = (id: number) => {
   });
 };
 
-const createOne = async (content: string) => {
-  const user = await prisma.user.findUnique({
-    where: { id: 1 }
-  });
+const createOne = async (userId: number, content: string) => {
   const editorContent = await prisma.editorContent.create({
-    data: { content, userId: user?.id ?? null }
+    data: { content, userId }
   });
   await prisma.editHistory.create({
-    data: { contentId: editorContent.id, userId: user?.id ?? null }
+    data: { contentId: editorContent.id, userId }
   });
   return editorContent;
 };
