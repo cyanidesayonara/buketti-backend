@@ -101,7 +101,6 @@ deploy staging:
     - schedules
   only:
     - main
-    - merge_requests
   before_script:
     - *define_tag
     - if [[ ! "${TAG-}" ]]; then echo "No version tag defined. Skipping deploy..."; exit; fi
