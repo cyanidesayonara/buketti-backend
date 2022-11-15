@@ -1,28 +1,21 @@
 import { prisma } from '../../prisma';
 
 const getAll = () => {
-  return prisma.editorContent.findMany({
-    include: { user: true }
-  });
+  return prisma.editorContent.findMany();
 };
 
 const getOne = (id: number) => {
   return prisma.editorContent.findUnique({
-    where: { id },
-    include: { user: true }
+    where: { id }
   });
 };
 
-const createOne = async (content: string) => {
-  const user = await prisma.user.findUnique({
-    where: { id: 1 }
-  });
+const createOne = async (userId: number, content: string) => {
   const editorContent = await prisma.editorContent.create({
-    data: { content, userId: user?.id ?? null },
-    include: { user: true }
+    data: { content, userId }
   });
   await prisma.editHistory.create({
-    data: { contentId: editorContent.id, userId: user?.id ?? null }
+    data: { contentId: editorContent.id, userId }
   });
   return editorContent;
 };
@@ -30,8 +23,7 @@ const createOne = async (content: string) => {
 const updateOne = async (id: number, content: string) => {
   const editorContent = await prisma.editorContent.update({
     where: { id },
-    data: { content },
-    include: { user: true }
+    data: { content }
   });
   await prisma.editHistory.create({
     data: { contentId: editorContent.id, userId: editorContent.userId }
@@ -41,8 +33,7 @@ const updateOne = async (id: number, content: string) => {
 
 const deleteOne = (id:number) => {
   return prisma.editorContent.delete({
-    where: { id },
-    include: { user: true }
+    where: { id }
   });
 };
 

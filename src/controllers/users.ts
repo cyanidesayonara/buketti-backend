@@ -10,7 +10,6 @@ const usersRouter = express.Router();
  * @property {string} createdAt
  * @property {string} name
  * @property {string} email
- * @property {array<EditorContent>} editorContents
  */
 
 /**

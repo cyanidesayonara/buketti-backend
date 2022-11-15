@@ -9,13 +9,14 @@ const editorContentsRouter = express.Router();
  * @property {number} id
  * @property {string} createdAt
  * @property {string} content
- * @property {User} user
+ * @property {number} userId
  */
 
 /**
  * New or updated editor content object
  * @typedef {object} NewOrUpdatedEditorContent
  * @property {string} content
+ * @property {number} userId
  */
 
 /**
@@ -73,8 +74,8 @@ editorContentsRouter.get('/:id', async (req: Request, res: Response) => {
  * @return {EditorContentResponse} 200 - OK - application/json
  */
 editorContentsRouter.post('/', async (req: Request, res: Response) => {
-  const { content } = req.body;
-  const editorContent = await createOne(content);
+  const { userId, content } = req.body;
+  const editorContent = await createOne(userId, content);
   return res.json({ message: '', data: editorContent });
 });
 
